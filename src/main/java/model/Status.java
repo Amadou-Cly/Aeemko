@@ -1,5 +1,5 @@
 package model;
 
 public enum Status {
-	Active, Inactive, Pendig;
+	Active, Inactive, Pending;
 }

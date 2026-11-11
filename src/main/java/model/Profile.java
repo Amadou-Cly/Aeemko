@@ -1,6 +1,8 @@
 package model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
@@ -10,10 +12,12 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
@@ -27,13 +31,13 @@ public class Profile {
 	private long profileId;
 	
 	@NotBlank(message = "Veillez entrer prénom!")
-	@Pattern(regexp= "^[A-Z][a-z]{2,15}( [A-Z][a-z]{2-15})?$", 
+	@Pattern(regexp= "^[A-Z][a-z]{2,15}( [A-Z][a-z]{2,15})?$", 
 					message = "Le prénom doit être commencer par une lettre majscule" )
 	@Column(name = "first_name")
 	private String firsName;
 	
 	@NotBlank(message = "Veillez entrer nom!")
-	@Pattern(regexp= "^[A-Z][a-z]{2,15}( [A-Z][a-z]{2-15})?$", 
+	@Pattern(regexp= "^[A-Z][a-z]{2,15}( [A-Z][a-z]{2,15})?$", 
 					message = "Le nom doit être commencer par une lettre majscule" )
 	@Column(name = "last_name")
 	private String lastName;
@@ -51,23 +55,23 @@ public class Profile {
 	@NotBlank(message = "Veiller entrer le d'un de vos proche telephone")
 	private String EmergenceNum;
 	
-	@NotEmpty(message = "Veillez saisir vôtre activity")
+	@NotNull(message = "Veillez saisir vôtre activity")
 	@Enumerated(EnumType.STRING)
 	@Column(name = "activity")
 	private Activity activity;
 	
-	@NotEmpty(message = "Veillez indiquer vôtre position")
+	@NotNull(message = "Veillez indiquer vôtre position")
 	@Enumerated(EnumType.STRING)
 	@Column(name = "position")
 	private Position position;
 	
-	@NotBlank(message = "Veillez entrer vôtre adresse")
+	@NotNull(message = "Veillez entrer vôtre adresse")
+	@Valid
 	@Embedded
-	@Column(name = "address")
 	private Address address;
 	
 	@NotBlank(message = "Veillez le nom de la ville")
-	@Pattern(regexp = "^[Aa-Zz]{3,15}$", message = "Le nom de la ville est incorrect")
+	@Pattern(regexp = "^[A-Za-z]{3,15}$", message = "Le nom de la ville est incorrect")
 	@Column(name = "city")
 	private String City;
 	
@@ -75,16 +79,29 @@ public class Profile {
 	@Column(name = "country")
 	private String country;
 	
-	@NotEmpty(message = "Veillez indiquer vôtre status")
+	@NotNull(message = "Veillez indiquer vôtre status")
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status")
 	private Status status;
 	
-	@NotEmpty
+	@NotNull
 	private boolean isActive;
-//Database connection
+//Database connections
+	
+	// Database connections
+
 	@OneToOne
+	@JoinColumn(name = "user_id", unique = true)
 	private User user;
+
+	@OneToMany(mappedBy = "profile")
+	private List<Announcement> announcements = new ArrayList<>();
+
+	@OneToMany(mappedBy = "profile")
+	private List<Event> events = new ArrayList<>();
+
+	@OneToMany(mappedBy = "profile")
+	private List<EventRegistration> registrations = new ArrayList<>();
 	
 	
 //getters and setters

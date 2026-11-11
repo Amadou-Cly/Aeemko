@@ -24,16 +24,16 @@ public class User {
 	private int userId;
 	
 	@NotBlank(message = "Veillez entrer le nom d'ulisateur! ")
-	@Pattern(regexp = "[Aa0-Zz9]{3-15}?",
+	@Pattern(regexp = "[A-Za-z0-9]{3,15}?",
 					message = "Le nom d'utilisateur doit être un nom composé de 3 à 15 lettres")
-	@Column(name = "user_name")
+	@Column(name = "user_name", nullable = false, unique = true)
 	private String userName;
 	
 	
 	@Email(message = "Veillez entrer votre email!")
-	@NotBlank(message = "L'email ne doit pqs être vide ou espce! ")
+	@NotBlank(message = "L'email ne doit pas être vide ou espce! ")
 	@Pattern(regexp = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$", message = "L'email est incorrect" )
-	@Column(name = "user_email")
+	@Column(name = "user_email", nullable = false, unique = true)
 	private String email;
 	
 	@NotBlank(message = "Veiller entrer vôtre mot de pass!")
@@ -100,8 +100,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [Id=" + userId + ", userName=" + userName + ", email=" + email + ", passWord=" + passWord + ", role="
-				+ role + "]";
+		return "User [Id=" + userId + ", userName=" + userName + ", email=" + email + ", role=" + role + "]";
 	}
 	
 	

@@ -4,7 +4,6 @@ import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 @Embeddable
@@ -14,26 +13,23 @@ public class Address {
 	private String title;
 	
 	@NotBlank(message = "Veillez le nom de la rue")
-	@Pattern(regexp = "^[Aa-Zz]{3,30}$")
+	@Pattern(regexp = "^[A-Za-z]{3,30}$")
 	private String street;
 	@Min(value = 0 , message = "Le numero dois être superieur est à 0")
 	@Max(value = 100, message = "Le numero dois être inferieur est à 100")
-	@NotNull(message = "le numero du la maison ne pas être null!")
 	private int houseNo;
 	
 	@Min(value = 0 , message = "Le numero dois être superieur est à 0")
 	@Max(value = 100, message = "Le numero dois être inferieur est à 100")
-	@NotNull(message = "le numero du la rue ne pas être null!")
 	private int apartNo;
 	
 	@NotBlank(message = "Veillez le nom du district")
 	@Pattern(regexp = "^[Aa-Zz]{3,30}$")
 	private String district;
 	
-	@Min(value = 0 , message = "Le numero dois être superieur est à 0")
-	@Max(value = 99999, message = "Le numero dois être inferieur est à 100")
-	@NotNull(message = "le numero du la rue ne pas être null!")
-	private int codePostal;
+	@NotBlank(message = "Veillez le numéro du code postal")
+	@Pattern(regexp = "^[Aa-Zz0-9]{5}$")
+	private String codePostal;
 // getters and setters
 
 	public String getTitle() {
@@ -75,17 +71,17 @@ public class Address {
 	public void setDistrict(String district) {
 		this.district = district;
 	}
-
-	public int getCodePostal() {
+	
+	public String getCodePostal() {
 		return codePostal;
 	}
 
-	public void setCodePostal(int codePostal) {
+	public void setCodePostal(String codePostal) {
 		this.codePostal = codePostal;
 	}
 // argument and no argument constructor
 	public Address() {}
-	public Address (String title, String street, int houseNo, int apartNo , String district, int codePostal) {
+	public Address (String title, String street, int houseNo, int apartNo , String district, String codePostal) {
 		setTitle(title);
 		setStreet(street);
 		setHouseNo(houseNo);
