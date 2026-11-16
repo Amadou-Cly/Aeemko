@@ -1,4 +1,4 @@
-package dtoRequest;
+package dto.dtoRequest;
 
 import jakarta.validation.constraints.NotNull;
 

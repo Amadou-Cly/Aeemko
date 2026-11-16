@@ -1,4 +1,4 @@
-package dtoResponse;
+package dto.dtoResponse;
 
 import model.UserRole;
 
