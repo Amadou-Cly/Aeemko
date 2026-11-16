@@ -21,7 +21,7 @@ import jakarta.validation.constraints.Pattern;
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int userId;
+	private long userId;
 	
 	@NotBlank(message = "Veillez entrer le nom d'ulisateur! ")
 	@Pattern(regexp = "[A-Za-z0-9]{3,15}?",
@@ -85,7 +85,7 @@ public class User {
 		this.role = role;
 	}
 
-	public int getId() {
+	public long getId() {
 		return userId;
 	}
 // arg and no arg constructors 
